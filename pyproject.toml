@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gestion-comercial"
+version = "1.0.0"
+description = "Client, product, order, and payment management system"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "alembic==1.16.5",
+  "fastapi==0.118.0",
+  "jinja2==3.1.6",
+  "psycopg[binary]==3.2.10",
+  "pydantic==2.12.5",
+  "python-dotenv==1.2.3",
+  "python-multipart==0.0.20",
+  "sqlalchemy==2.0.43",
+  "starlette==0.46.2",
+  "uvicorn[standard]==0.37.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "httpx==0.28.1",
+  "pytest==8.4.2",
+  "pytest-cov==7.0.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --disable-warnings"
+pythonpath = ["."]

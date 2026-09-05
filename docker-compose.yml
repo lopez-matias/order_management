@@ -1,0 +1,30 @@
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: gestion_comercial
+      POSTGRES_USER: gestion
+      POSTGRES_PASSWORD: gestion
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gestion -d gestion_comercial"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build: .
+    environment:
+      APP_NAME: NODO - Client & Order Management
+      ENVIRONMENT: development
+      DATABASE_URL: postgresql+psycopg://gestion:gestion@db:5432/gestion_comercial
+      SECRET_KEY: local-docker-development-key
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:

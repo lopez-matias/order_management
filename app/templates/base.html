@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Sistema de gestión comercial para clientes, productos, pedidos y pagos">
+  <title>{{ title }} · NODO</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%2216%22 fill=%22%23d9f45f%22/><path d=%22M9 22V10h3l8 8v-8h3v12h-3l-8-8v8z%22 fill=%22%23131714%22/></svg>">
+  <link rel="stylesheet" href="{{ url_for('static', path='/css/app.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', path='/css/minimal.css') }}">
+</head>
+<body data-page="{{ page }}"{% block body_attrs %}{% endblock %}>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="/" aria-label="Ir al panel general">
+        <span class="brand-mark">N</span>
+        <span><strong>NODO</strong><small>GESTIÓN COMERCIAL</small></span>
+      </a>
+      <nav class="nav" aria-label="Navegación principal">
+        <p class="nav-label">OPERACIONES</p>
+        <a href="/" class="nav-link {% if page == 'dashboard' %}active{% endif %}">
+          <svg aria-hidden="true"><use href="#icon-grid"></use></svg><span>Panel general</span><small class="nav-code">01</small>
+        </a>
+        <a href="/pedidos" class="nav-link {% if page == 'orders' %}active{% endif %}">
+          <svg aria-hidden="true"><use href="#icon-orders"></use></svg><span>Pedidos</span><small class="nav-code">02</small>
+        </a>
+        <a href="/clientes" class="nav-link {% if page == 'customers' %}active{% endif %}">
+          <svg aria-hidden="true"><use href="#icon-users"></use></svg><span>Clientes</span><small class="nav-code">03</small>
+        </a>
+        <a href="/productos" class="nav-link {% if page == 'products' %}active{% endif %}">
+          <svg aria-hidden="true"><use href="#icon-box"></use></svg><span>Productos</span><small class="nav-code">04</small>
+        </a>
+        <p class="nav-label nav-label-secondary">SISTEMA</p>
+        <a href="/docs" class="nav-link">
+          <svg aria-hidden="true"><use href="#icon-code"></use></svg><span>Documentación API</span><small class="nav-code">API</small>
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="avatar">AD</div>
+        <div><strong>Admin Demo</strong><span>Administrador</span></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-button menu-button" id="menu-toggle" aria-label="Abrir menú">
+          <svg><use href="#icon-menu"></use></svg>
+        </button>
+        <div class="topbar-context"><span>NODO / GESTIÓN</span><strong><i></i>{{ title }}</strong></div>
+        <div class="topbar-actions">
+          <span class="demo-badge"><span></span> Datos demostrativos</span>
+          <button class="icon-button" aria-label="Notificaciones"><svg><use href="#icon-bell"></use></svg></button>
+        </div>
+      </header>
+      <div class="content">
+        {% block content %}{% endblock %}
+      </div>
+    </main>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+  <div id="confirm-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+    <div class="modal modal-small">
+      <button class="modal-close" data-close-modal aria-label="Cerrar">×</button>
+      <div class="modal-icon warning"><svg><use href="#icon-alert"></use></svg></div>
+      <h2 id="confirm-title">Confirmar acción</h2>
+      <p id="confirm-message"></p>
+      <div class="modal-actions"><button class="btn btn-ghost" data-close-modal>Cancelar</button><button class="btn btn-danger" id="confirm-action">Confirmar</button></div>
+    </div>
+  </div>
+
+  <svg class="svg-sprite" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="icon-grid" viewBox="0 0 24 24"><path d="M4 4h6v6H4zm10 0h6v6h-6zM4 14h6v6H4zm10 0h6v6h-6z"/></symbol>
+    <symbol id="icon-orders" viewBox="0 0 24 24"><path d="M6 3h12a2 2 0 0 1 2 2v16l-4-2-4 2-4-2-4 2V5a2 2 0 0 1 2-2Zm2 5h8M8 12h8M8 16h5"/></symbol>
+    <symbol id="icon-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2m7-10a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm13 10v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="icon-box" viewBox="0 0 24 24"><path d="m21 8-9-5-9 5 9 5 9-5ZM3 8v8l9 5 9-5V8M12 13v8"/></symbol>
+    <symbol id="icon-code" viewBox="0 0 24 24"><path d="m8 9-4 3 4 3m8-6 4 3-4 3m-2-9-4 12"/></symbol>
+    <symbol id="icon-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="icon-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9m-8 13h4"/></symbol>
+    <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+    <symbol id="icon-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="icon-arrow" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="icon-money" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18m-5 5h2"/></symbol>
+    <symbol id="icon-cart" viewBox="0 0 24 24"><path d="M3 3h2l2.4 11.4A2 2 0 0 0 9.4 16H18a2 2 0 0 0 2-1.6L21 8H6m4 12h.01M18 20h.01"/></symbol>
+    <symbol id="icon-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+    <symbol id="icon-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="icon-edit" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"/></symbol>
+    <symbol id="icon-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2m3 0-1 15H6L5 6m5 4v7m4-7v7"/></symbol>
+    <symbol id="icon-alert" viewBox="0 0 24 24"><path d="M12 3 2 21h20L12 3Zm0 6v5m0 3h.01"/></symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="icon-filter" viewBox="0 0 24 24"><path d="M4 5h16M7 12h10m-7 7h4"/></symbol>
+    <symbol id="icon-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></symbol>
+    <symbol id="icon-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  </svg>
+  <script src="{{ url_for('static', path='/js/common.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

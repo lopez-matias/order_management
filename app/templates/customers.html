@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-heading compact">
+  <div><p class="eyebrow">DIRECTORIO COMERCIAL</p><h1>Clientes</h1><p>Administra los datos y el historial de tus clientes.</p></div>
+  <button class="btn btn-primary" id="new-customer"><svg><use href="#icon-plus"></use></svg>Nuevo cliente</button>
+</section>
+<section class="card list-card">
+  <div class="toolbar">
+    <label class="search-field"><svg><use href="#icon-search"></use></svg><input id="customer-search" type="search" placeholder="Buscar por nombre, documento o correo…" autocomplete="off"></label>
+    <label class="select-field"><svg><use href="#icon-filter"></use></svg><select id="customer-status"><option value="true">Clientes activos</option><option value="">Todos</option><option value="false">Inactivos</option></select></label>
+  </div>
+  <div class="table-scroll"><table><thead><tr><th>CLIENTE</th><th>DOCUMENTO</th><th>CONTACTO</th><th>ESTADO</th><th>REGISTRO</th><th class="align-right">ACCIONES</th></tr></thead><tbody id="customers-table"></tbody></table></div>
+  <div class="pagination" id="customers-pagination"></div>
+</section>
+
+<div id="customer-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="customer-modal-title">
+  <div class="modal">
+    <button class="modal-close" data-close-customer aria-label="Cerrar">×</button>
+    <p class="eyebrow">FICHA COMERCIAL</p><h2 id="customer-modal-title">Nuevo cliente</h2><p class="modal-intro">Completa la información principal del cliente.</p>
+    <form id="customer-form" novalidate>
+      <input type="hidden" name="id">
+      <div class="form-grid"><label class="field field-wide"><span>Nombre o razón social *</span><input name="name" required minlength="2" maxlength="160" placeholder="Ej.: Cliente Demo Centro"></label><label class="field"><span>Documento *</span><input name="document" required minlength="3" maxlength="40" placeholder="Ej.: DEMO-001"></label><label class="field"><span>Correo electrónico</span><input name="email" type="email" maxlength="254" placeholder="contacto@ejemplo.test"></label><label class="field"><span>Teléfono</span><input name="phone" maxlength="40" placeholder="099 000 000"></label><label class="field"><span>Dirección</span><input name="address" maxlength="300" placeholder="Dirección comercial"></label><label class="field field-wide"><span>Notas</span><textarea name="notes" rows="3" maxlength="2000" placeholder="Información adicional…"></textarea></label></div>
+      <div class="form-error hidden" id="customer-error"></div>
+      <div class="modal-actions"><button type="button" class="btn btn-ghost" data-close-customer>Cancelar</button><button type="submit" class="btn btn-primary">Guardar cliente</button></div>
+    </form>
+  </div>
+</div>
+
+<div id="history-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="history-title">
+  <div class="modal modal-large"><button class="modal-close" data-close-history aria-label="Cerrar">×</button><p class="eyebrow">HISTORIAL DE COMPRAS</p><h2 id="history-title">Cliente</h2><div id="customer-history"></div></div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='/js/customers.js') }}"></script>{% endblock %}
+

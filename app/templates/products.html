@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-heading compact">
+  <div><p class="eyebrow">CATÁLOGO E INVENTARIO</p><h1>Productos</h1><p>Gestiona precios, referencias y existencias.</p></div>
+  <button class="btn btn-primary" id="new-product"><svg><use href="#icon-plus"></use></svg>Nuevo producto</button>
+</section>
+<section class="card list-card">
+  <div class="toolbar"><label class="search-field"><svg><use href="#icon-search"></use></svg><input id="product-search" type="search" placeholder="Buscar por producto, SKU o descripción…"></label><label class="select-field"><svg><use href="#icon-filter"></use></svg><select id="product-status"><option value="true">Productos activos</option><option value="">Todos</option><option value="false">Inactivos</option></select></label><label class="checkbox-filter"><input type="checkbox" id="low-stock"><span>Stock bajo</span></label></div>
+  <div class="table-scroll"><table><thead><tr><th>PRODUCTO</th><th>SKU</th><th class="align-right">PRECIO</th><th class="align-right">STOCK</th><th>ESTADO</th><th class="align-right">ACCIONES</th></tr></thead><tbody id="products-table"></tbody></table></div>
+  <div class="pagination" id="products-pagination"></div>
+</section>
+<div id="product-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="product-modal-title"><div class="modal"><button class="modal-close" data-close-product aria-label="Cerrar">×</button><p class="eyebrow">CATÁLOGO</p><h2 id="product-modal-title">Nuevo producto</h2><p class="modal-intro">Define la referencia, el precio actual y su stock.</p><form id="product-form" novalidate><input type="hidden" name="id"><div class="form-grid"><label class="field"><span>SKU *</span><input name="sku" required minlength="2" maxlength="50" placeholder="PROD-001"></label><label class="field"><span>Nombre *</span><input name="name" required minlength="2" maxlength="180" placeholder="Nombre del producto"></label><label class="field"><span>Precio *</span><div class="input-prefix"><span>$</span><input name="price" type="number" min="0" step="0.01" required placeholder="0,00"></div></label><label class="field"><span>Stock *</span><input name="stock" type="number" min="0" step="1" required value="0"></label><label class="field field-wide"><span>Descripción</span><textarea name="description" rows="3" maxlength="2000" placeholder="Características o detalles…"></textarea></label></div><div class="form-error hidden" id="product-error"></div><div class="modal-actions"><button type="button" class="btn btn-ghost" data-close-product>Cancelar</button><button type="submit" class="btn btn-primary">Guardar producto</button></div></form></div></div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='/js/products.js') }}"></script>{% endblock %}
+

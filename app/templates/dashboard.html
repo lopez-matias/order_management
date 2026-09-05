@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-heading dashboard-heading">
+  <div class="headline-wrap"><span class="hero-mark" aria-hidden="true">↗</span><div><p class="eyebrow">PULSO DEL NEGOCIO</p><h1>Control sin ruido.</h1><p>Una lectura clara de lo que está pasando hoy.</p></div></div>
+  <div class="heading-actions"><span class="date-chip"><svg><use href="#icon-calendar"></use></svg><span id="today-label"></span></span><a href="/pedidos/nuevo" class="btn btn-primary"><svg><use href="#icon-plus"></use></svg>Nuevo pedido</a></div>
+</section>
+
+<section class="metric-grid" id="metrics">
+  {% for icon, label in [('money','Ventas del mes'),('cart','Pedidos del mes'),('user','Clientes activos'),('clock','Cobros pendientes')] %}
+  <article class="metric-card skeleton-card"><span class="metric-index">0{{ loop.index }}</span>
+    <div class="metric-icon {{ icon }}"><svg><use href="#icon-{{ icon }}"></use></svg></div>
+    <div class="metric-copy"><span>{{ label }}</span><strong class="skeleton-line"></strong><small class="skeleton-line short"></small></div>
+  </article>
+  {% endfor %}
+</section>
+
+<section class="dashboard-grid">
+  <article class="card chart-card">
+    <div class="card-header"><div><h2>Ventas mensuales</h2><p>Evolución de los últimos 12 meses</p></div><span class="legend"><i></i>Facturación</span></div>
+    <div class="chart-wrap"><canvas id="sales-chart" role="img" aria-label="Gráfico de ventas mensuales"></canvas><div id="chart-tooltip" class="chart-tooltip hidden"></div></div>
+  </article>
+  <article class="card ranking-card">
+    <div class="card-header"><div><h2>Mejores clientes</h2><p>Por volumen de compra</p></div><a href="/clientes">Ver todos <svg><use href="#icon-arrow"></use></svg></a></div>
+    <div id="top-customers" class="ranking-list loading-list"></div>
+  </article>
+</section>
+
+<section class="card table-card">
+  <div class="card-header"><div><h2>Pedidos recientes</h2><p>Últimos movimientos registrados</p></div><a href="/pedidos">Ver historial <svg><use href="#icon-arrow"></use></svg></a></div>
+  <div class="table-scroll"><table><thead><tr><th>PEDIDO</th><th>CLIENTE</th><th>FECHA</th><th>ESTADO</th><th>PAGO</th><th class="align-right">TOTAL</th><th></th></tr></thead><tbody id="recent-orders"><tr><td colspan="7"><div class="empty-inline">Cargando pedidos…</div></td></tr></tbody></table></div>
+</section>
+
+<section class="dashboard-grid bottom-grid">
+  <article class="card ranking-card">
+    <div class="card-header"><div><h2>Productos destacados</h2><p>Unidades vendidas</p></div><a href="/productos">Inventario <svg><use href="#icon-arrow"></use></svg></a></div>
+    <div id="top-products" class="product-ranking loading-list"></div>
+  </article>
+  <article class="card pending-card">
+    <div class="card-header"><div><h2>Cobros pendientes</h2><p>Saldos que requieren seguimiento</p></div><span id="pending-count" class="count-badge">0</span></div>
+    <div id="pending-payments" class="pending-list loading-list"></div>
+  </article>
+</section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='/js/dashboard.js') }}"></script>{% endblock %}
