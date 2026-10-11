@@ -11,5 +11,5 @@
 </form>
 <template id="item-template"><div class="order-item"><label class="field"><span class="mobile-label">Producto</span><select class="item-product" required><option value="">Seleccionar producto…</option></select></label><label class="field"><span class="mobile-label">Cantidad</span><input class="item-quantity" type="number" min="1" step="1" value="1" required></label><div class="item-price">$ 0,00</div><strong class="item-total">$ 0,00</strong><button type="button" class="icon-button danger remove-item" aria-label="Quitar producto"><svg><use href="#icon-trash"></use></svg></button></div></template>
 {% endblock %}
-{% block scripts %}<script src="{{ url_for('static', path='/js/order_form.js') }}"></script>{% endblock %}
+{% block scripts %}<script src="/static/js/order_form.js"></script>{% endblock %}
 
